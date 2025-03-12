@@ -47,6 +47,17 @@ public class EmpleadoControllerTest {
 	    empleado.setSalario(200L);
 	    empleado.setBono(100L);
 	    empleado.setDescuento(300L);
+	    empleado.setId(1);
+	    
+	    Assertions.assertNotNull( empleado.getId() );
+	    Assertions.assertNotNull( empleado.getRutdni() );
+	    Assertions.assertNotNull( empleado.getNombre() );
+	    Assertions.assertNotNull( empleado.getApellido() );
+	    Assertions.assertNotNull( empleado.getCargo() );
+	    Assertions.assertNotNull( empleado.getSalario());
+	    Assertions.assertNotNull( empleado.getBono());
+	    Assertions.assertNotNull( empleado.getDescuento());
+	    Assertions.assertNotNull( empleado.toString());
 	    
 	    List<Empleado> empleados = new ArrayList<Empleado>();
 	    empleados.add(empleado);
@@ -93,7 +104,7 @@ public class EmpleadoControllerTest {
 		MultipartFile multipartFile = Mockito.mock(MultipartFile.class );
 		
 		when(multipartFile.isEmpty()).thenReturn(Boolean.FALSE);
-		Path path = Paths.get("empleados_100002.csv");
+		Path path = Paths.get("data/empleados_100002.csv");
 
 		when(multipartFile.getInputStream()).thenReturn(Files.newInputStream(path));
 		
@@ -114,6 +125,28 @@ public class EmpleadoControllerTest {
 		
 		Assertions.assertNotNull(empleadoController.subirArchivo(multipartFile));
 			
+	}
+	
+	@Test
+	public void testdto() {
+		EmpleadoDTO empleado = new EmpleadoDTO();
+	    empleado.setNombre("n");
+	    empleado.setApellido("a");
+	    empleado.setCargo("c");
+	    empleado.setRutdni("1-9");
+	    empleado.setSalario(200L);
+	    empleado.setBono(100L);
+	    empleado.setDescuento(300L);
+	    
+	    Assertions.assertNotNull( empleado.getRutdni());
+	    Assertions.assertNotNull( empleado.getNombre());
+	    Assertions.assertNotNull( empleado.getApellido());
+	    Assertions.assertNotNull( empleado.getCargo());
+	    Assertions.assertNotNull( empleado.getSalario());
+	    Assertions.assertNotNull( empleado.getBono());
+	    Assertions.assertNotNull( empleado.getDescuento());
+	    Assertions.assertNotNull( empleado.toString());
+	    
 	}
 	
 

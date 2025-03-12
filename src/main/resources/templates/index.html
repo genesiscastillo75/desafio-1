@@ -69,8 +69,11 @@
 	<h2>CARGA DE NOMINA</h2>
     <input type="file" id="archivo" />
     <button id="subirArchivo" type="button">Subir Archivo</button>
+    <br>
+   	<div id="mensajeArchivoPar" style="display:none">ESPERE PROCESANDO!</div>
+    <br>
     <div id="mensajeArchivo"></div>
-    
+    <br>
     <table id="tablaSueldos" border="1">
         <thead>
             <tr>
@@ -88,6 +91,11 @@
         </tbody>
     </table>
 	<script type="text/javascript">
+	    setInterval(() => {
+	        let texto = document.getElementById("mensajeArchivoPar");
+	        texto.classList.toggle("hidden");
+	    }, 500); // Parpadeo cada 500ms	
+	
 	  $(document).ready(function () {
 		  $("#subirArchivo").click(function () {
               var archivo = $("#archivo")[0].files[0];
@@ -99,7 +107,7 @@
 
               var formData = new FormData();
               formData.append("archivo", archivo);
-
+              $("#mensajeArchivoPar").show();
               $.ajax({
                   url: "http://localhost:8080/desafio-1/api/empleados/subirArchivo",  // URL del servicio
                   type: "POST",
@@ -107,10 +115,12 @@
                   contentType: false,  // Importante, no establecer el contentType
                   processData: false,  // Importante, para enviar el archivo correctamente
                   success: function (response) {
+                	  $("#mensajeArchivoPar").hide();
                       $("#mensajeArchivo").html("<p>Archivo cargado con éxito.</p>");
                       mostrarDatosEnTabla(response); 
                   },
                   error: function () {
+                	  $("#mensajeArchivoPar").hide();
                       $("#mensajeArchivo").html("<p style='color:red'>Error al cargar el archivo.</p>");
                   }
               });

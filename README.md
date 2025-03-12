@@ -1,7 +1,7 @@
 ## 📌 **README.md** - Aplicación PREVIRED
 
 ```md
-# 🌟 Mi Aplicación PREVIRED (WAR)
+# 🌟 PREVIRED (WAR)
 
 Este proyecto es una aplicación **Spring Boot** empaquetada como **WAR** para desplegar en **Apache Tomcat**.
 
@@ -15,79 +15,70 @@ Este proyecto es una aplicación **Spring Boot** empaquetada como **WAR** para d
 ---
 
 ## 📂 **Estructura del Proyecto**
-
-```bash
+```sh
 desafio-1/
-│   01 README.md
-│   02 Instrucciones del ejercicio-1.md
-│   deploy.cmd
-│   empleados_100000.csv
-│   empleados_100002.csv
 │   pom.xml
 │   README.md
 │
-├───.settings
-│       .jsdtscope
-│       org.eclipse.core.resources.prefs
-│       org.eclipse.jdt.apt.core.prefs
-│       org.eclipse.jdt.core.prefs
-│       org.eclipse.m2e.core.prefs
-│       org.eclipse.wst.common.component
-│       org.eclipse.wst.common.project.facet.core.xml
-│       org.eclipse.wst.jsdt.ui.superType.container
-│       org.eclipse.wst.jsdt.ui.superType.name
-│       org.eclipse.wst.validation.prefs
-│       org.springframework.ide.eclipse.prefs
+├───data
+│       01 README.md
+│       02 Instrucciones del ejercicio-1.md
+│       empleados_100000.csv
+│       empleados_100002.csv
+│       index.png
+│       mvntest.png
+│       pruebaunitaria.png
 │
-├───src
-│   ├───main
-│   │   ├───java
-│   │   │   └───cl
-│   │   │       └───genesiscastillo
-│   │   │           └───previred
-│   │   │               │   Application.java
-│   │   │               │   ServletInitializer.java
-│   │   │               │
-│   │   │               ├───controllers
-│   │   │               │       EmpleadoController.java
-│   │   │               │       IndexController.java
-│   │   │               │
-│   │   │               ├───dtos
-│   │   │               │       EmpleadoDTO.java
-│   │   │               │
-│   │   │               ├───entities
-│   │   │               │       Country.java
-│   │   │               │       Empleado.java
-│   │   │               │
-│   │   │               ├───repositories
-│   │   │               │       EmpleadoRepository.java
-│   │   │               │
-│   │   │               ├───services
-│   │   │               │       EmpleadoService.java
-│   │   │               │
-│   │   │               └───validations
-│   │   │                       RutValidator.java
-│   │   │                       SalarioValidator.java
-│   │   │                       ValidaSalario.java
-│   │   │                       ValidRut.java
-│   │   │
-│   │   ├───resources
-│   │   │   │   application.properties
-│   │   │   │   data.sql
-│   │   │   │
-│   │   │   └───templates
-│   │   │           index.html
-│   │   │
-│   │   └───webapp
-│   └───test
-│       └───java
-│           └───cl
-│               └───genesiscastillo
-│                   └───previred
-│                           EmpleadoControllerTest.java
-│                           EmpleadoServiceTest.java
-│                           SalarioValidatorTest.java
-│
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───cl
+    │   │       └───genesiscastillo
+    │   │           └───previred
+    │   │               │   Application.java
+    │   │               │   ServletInitializer.java
+    │   │               │
+    │   │               ├───controllers
+    │   │               │       EmpleadoController.java
+    │   │               │       IndexController.java
+    │   │               │
+    │   │               ├───dtos
+    │   │               │       EmpleadoDTO.java
+    │   │               │
+    │   │               ├───entities
+    │   │               │       Empleado.java
+    │   │               │
+    │   │               ├───repositories
+    │   │               │       EmpleadoRepository.java
+    │   │               │
+    │   │               ├───services
+    │   │               │       EmpleadoService.java
+    │   │               │
+    │   │               └───validations
+    │   │                       RutValidator.java
+    │   │                       SalarioValidator.java
+    │   │                       ValidaSalario.java
+    │   │                       ValidRut.java
+    │   │
+    │   ├───resources
+    │   │   │   application.properties
+    │   │   │
+    │   │   └───templates
+    │   │           index.html
+    │   │
+    │   └───webapp
+    └───test
+        └───java
+            └───cl
+                └───genesiscastillo
+                    └───previred
+                            ApplicationTest.java
+                            EmpleadoControllerTest.java
+                            EmpleadoServiceTest.java
+                            RutValidatorTest.java
+                            SalarioValidatorTest.java
+
+
 ```
 
 ---
@@ -96,9 +87,11 @@ desafio-1/
 
 ### 📦 **1. Clonar el repositorio**
 ```sh
-git clone https://github.com/tuusuario/mi-aplicacion.git
-cd mi-aplicacion
+git clone https://github.com/genesiscastillo75/desafio-1.git
+cd desafio-1
 ```
+
+---
 
 ### ⚙️ **2. Configurar el entorno**
 Edita `src/main/resources/application.properties` si necesitas modificar la configuración.
@@ -107,12 +100,13 @@ Edita `src/main/resources/application.properties` si necesitas modificar la conf
 ```sh
 mvn clean package
 ```
-El WAR generado estará en `target/mi-aplicacion.war`.
+
+El WAR generado estará en `target/desafio-1.war`.
 
 ### 🚀 **4. Desplegar en Tomcat**
 1. Copia el archivo `.war` en la carpeta de despliegue de Tomcat:
    ```sh
-   cp target/mi-aplicacion.war /ruta/a/tomcat/webapps/
+   cp target/desafio-1.war /apache-tomcat-8.5.100/webapps
    ```
 2. Inicia Tomcat:
    ```sh
@@ -121,15 +115,18 @@ El WAR generado estará en `target/mi-aplicacion.war`.
    ```
 3. Abre en el navegador:
    ```
-   http://localhost:8080/mi-aplicacion/
+   http://localhost:8080/desafio-1/
    ```
+
+![Index.html](./data/index.png)
+
 
 ---
 
 ## 🛠 **Tecnologías Usadas**
 - **Spring Boot**  
 - **Spring MVC**  
-- **Thymeleaf**  
+- **HTML & JQuery**  
 - **JPA / Hibernate**  
 - **H2 Database (para pruebas)**  
 - **Maven**  
@@ -140,36 +137,48 @@ El WAR generado estará en `target/mi-aplicacion.war`.
 ## 📜 **Endpoints REST**
 | Método | Ruta | Descripción |
 |--------|------|------------|
-| `GET` | `/` | Página de inicio |
-| `GET` | `/api/saludo` | Devuelve un mensaje JSON |
-| `POST` | `/api/usuarios` | Crea un usuario |
+| `GET` | `/desafio-1/api/` | Página de inicio |
+| `GET` | `/desafio-1/api/empleados/` | Obtiene una lista de empleados |
+| `POST` | `/desafio-1/api/empleados/` | Crea un empleado |
+| `DELETE` | `/desafio-1/api/empleados/{id}` | Elimina un usuario |
+|--------|------|------------|
+| `POST` | `/desafio-1/api/empleados/subirArchivo` | Cargar un archivo csv de nomina |
 
 Ejemplo de endpoint:
 ```sh
-curl -X GET http://localhost:8080/api/saludo
+curl -X GET http://localhost:8080/desafio-1/api/empleados/
+```
+
+```json
+[
+    {
+        "id": 1,
+        "nombre": "cesar",
+        "apellido": "castillo",
+        "rutdni": "22312323-6",
+        "cargo": "desarrollador",
+        "salario": 3000000,
+        "bono": 30000,
+        "descuento": 3000
+    }
+]
 ```
 
 ---
 
-## 🔍 **Contribuir**
-1. Haz un fork del proyecto 🍴  
-2. Crea una nueva rama: `git checkout -b feature-nueva`  
-3. Realiza tus cambios y commitea: `git commit -m 'Agregado nuevo feature'`  
-4. Haz push a tu rama: `git push origin feature-nueva`  
-5. Crea un Pull Request 🚀  
-
----
-
-## 📄 **Licencia**
-Este proyecto está bajo la licencia **MIT**.
-
----
-
-### 🎯 **Notas Finales**
-Si tienes problemas o dudas, ¡abre un issue en el repositorio! 🚀
-
+### 🎯 **Pruebas Unitarias**
+```sh
+mvn clean test
 ```
+![Prueba Unitaria](data/mvntest.png)
 
+### 🎯 **Cobertura de Codigo**
+```sh
+cd target\site\jacoco
+ls -l 
+12-03-2025  18:48             6.622 index.html
+```
+**index.html**
+![Cobertura de COdigo](data/pruebaunitaria.png)
 ---
 
-Este README.md es **claro, detallado y fácil de seguir**. ¿Quieres agregar algo más? 😊

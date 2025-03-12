@@ -121,7 +121,6 @@ public class EmpleadoService {
 			empleadoRepository.deleteById(id);
 			return true;
 		} else {
-			//throw new RuntimeException("Empleado no encontrado con ID: " + id);
 			return false;
 		}
 	}

@@ -1,5 +1,6 @@
 package cl.genesiscastillo.previred;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -21,6 +22,29 @@ public class EmpleadoServiceTest {
 	
 	EmpleadoRepository empleadoRepository = Mockito.mock(EmpleadoRepository.class );
 	
+	@Test
+	public void tst6() {
+		Integer id = 1;
+		
+		when(empleadoRepository.existsById(id)).thenReturn(true);
+		doNothing().when(empleadoRepository).deleteById(id);
+		
+		EmpleadoService empleadoService = new EmpleadoService(empleadoRepository);
+		
+		Assertions.assertTrue(empleadoService.eliminarEmpleado(id));
+	}
+
+	@Test
+	public void tst8() {
+		Integer id = 1;
+		
+		when(empleadoRepository.existsById(id)).thenReturn(false);
+		doNothing().when(empleadoRepository).deleteById(id);
+		
+		EmpleadoService empleadoService = new EmpleadoService(empleadoRepository);
+		
+		Assertions.assertFalse(empleadoService.eliminarEmpleado(id));
+	}
 
 	@Test
 	public void test5() throws Exception {

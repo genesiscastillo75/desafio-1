@@ -24,9 +24,7 @@ public class RutValidator implements ConstraintValidator<ValidRut, String> {
         	}
             rut = rut.toUpperCase();
             rut = rut.replace(".", "").replace("-", "");
-            if(rut.isEmpty()) {
-            	return false;
-            }
+            
             int rutAux = Integer.parseInt(rut.substring(0, rut.length() - 1));
 
             char dv = rut.charAt(rut.length() - 1);

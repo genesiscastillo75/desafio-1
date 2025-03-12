@@ -86,38 +86,4 @@ public class EmpleadoController {
 			return ResponseEntity.badRequest().body("No se encontro el empleado con id = "+id);	
 		}
 	}
-	
-    @PostMapping("/subirArchivo")
-    public ResponseEntity<List<String[]>> subirArchivo(@RequestParam("archivo") MultipartFile archivo) throws InterruptedException, ExecutionException {
-    	LOGGER.info("subirArchivo ");
-    	
-        if (archivo.isEmpty()) {
-        	return ResponseEntity.badRequest().body(null);
-        }
-        try {
-            List<String[]> sueldos = procesarCSV(archivo);
-            return ResponseEntity.ok(sueldos);
-        } catch (IOException e) {
-            return ResponseEntity.status(500).body(null);
-        }
-    }
-   	
-	private List<String[]> procesarCSV(MultipartFile archivo) throws IOException, InterruptedException, ExecutionException {
-	    List<String[]> sueldos = new ArrayList<>();
-        List<String[]> sueldos2 = new ArrayList<>();	    
-	    try (BufferedReader reader = new BufferedReader(new InputStreamReader(archivo.getInputStream()))) {
-	        String linea;
-	        int contador = 0;
-	        while ((linea = reader.readLine()) != null) {
-	            String[] valores = linea.split(",");
-	            if( contador == 0 ) {
-	            	contador++;
-	            	continue;
-	            }
-	            sueldos.add(valores);
-	        }
-	        sueldos2 = empleadoService.procesarSueldoFinal(sueldos);
-	    }
-	    return sueldos2;
-	}
 }

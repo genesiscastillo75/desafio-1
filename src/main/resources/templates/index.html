@@ -109,7 +109,7 @@
               formData.append("archivo", archivo);
               $("#mensajeArchivoPar").show();
               $.ajax({
-                  url: "http://localhost:8080/desafio-1/api/empleados/subirArchivo",  // URL del servicio
+                  url: "http://localhost:8080/desafio-1/api/nominas/calcular",  // URL del servicio
                   type: "POST",
                   data: formData,
                   contentType: false,  // Importante, no establecer el contentType

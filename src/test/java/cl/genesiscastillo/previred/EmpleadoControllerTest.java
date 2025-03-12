@@ -88,44 +88,6 @@ public class EmpleadoControllerTest {
 		Assertions.assertNotNull(empleadoController.eliminarEmpleado(id));
 	}
 	
-	@Test
-	public void test6() throws InterruptedException, ExecutionException {
-		MultipartFile multipartFile = Mockito.mock(MultipartFile.class );
-		
-		when(multipartFile.isEmpty()).thenReturn(Boolean.TRUE);
-		
-		EmpleadoController empleadoController = new EmpleadoController(empleadoService , factory );
-		Assertions.assertNotNull(empleadoController.subirArchivo(multipartFile));
-			
-	}
-
-	@Test
-	public void test7() throws InterruptedException, ExecutionException, Exception {
-		MultipartFile multipartFile = Mockito.mock(MultipartFile.class );
-		
-		when(multipartFile.isEmpty()).thenReturn(Boolean.FALSE);
-		Path path = Paths.get("data/empleados_100002.csv");
-
-		when(multipartFile.getInputStream()).thenReturn(Files.newInputStream(path));
-		
-		EmpleadoController empleadoController = new EmpleadoController(empleadoService , factory );
-		Assertions.assertNotNull(empleadoController.subirArchivo(multipartFile));
-			
-	}
-	
-	@Test
-	public void test8() throws InterruptedException, ExecutionException, Exception {
-		MultipartFile multipartFile = Mockito.mock(MultipartFile.class );
-		
-		when(multipartFile.isEmpty()).thenReturn(Boolean.FALSE);
-		
-		when(multipartFile.getInputStream()).thenThrow(new IOException("ERROR"));
-		
-		EmpleadoController empleadoController = new EmpleadoController(empleadoService , factory );
-		
-		Assertions.assertNotNull(empleadoController.subirArchivo(multipartFile));
-			
-	}
 	
 	@Test
 	public void testdto() {

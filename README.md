@@ -134,15 +134,20 @@ El WAR generado estará en `target/desafio-1.war`.
 
 ---
 
-## 📜 **Endpoints REST**
+## 📜 **Endpoints REST :: Empleados**
 | Método | Ruta | Descripción |
 |--------|------|------------|
 | `GET` | `/desafio-1/api/` | Página de inicio |
 | `GET` | `/desafio-1/api/empleados/` | Obtiene una lista de empleados |
 | `POST` | `/desafio-1/api/empleados/` | Crea un empleado |
 | `DELETE` | `/desafio-1/api/empleados/{id}` | Elimina un usuario |
+
+
+## 📜 **Endpoints REST :: Nominas**
+| Método | Ruta | Descripción |
 |--------|------|------------|
-| `POST` | `/desafio-1/api/empleados/subirArchivo` | Cargar un archivo csv de nomina |
+| `POST` | `/desafio-1/api/nominas/calcular` | Cargar un archivo csv de nomina |
+
 
 Ejemplo de endpoint:
 ```sh

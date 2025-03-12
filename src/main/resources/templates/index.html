@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleado Previred</title>
+	<script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<h1>PREVIRED</h1>
+	<hr>
+	<h2>LISTA DE EMPLEADOS</h2>
+    <button id="cargarEmpleados">Cargar Empleados</button>
+    <table border="1">
+    <thead>
+    	<tr>
+    		<th width="12.5%">RUT</th>
+    		<th width="12.5%">NOMBRES</th>
+    		<th width="12.5%">APELLIDOS</th>
+    		<th width="12.5%">CARGO</th>
+    		<th width="12.5%">SALARIO</th>
+    		<th width="12.5%">BONO</th>
+    		<th width="12.5%">DESCUENTO</th>
+    		<th width="12.5%">ACCION</th>
+    	</tr>
+    	</thead>
+    	<tbody id="tablaEmpleado"></tbody>
+    </table>
+	<p id="mensaje"></p>
+    <hr>
+	<h2>REGISTRO DE EMPLEADO</h2>    
+    <table>
+    	<form id="empleadoForm">
+	    	<tr>
+	    		<td>RUT</td>
+	    		<td><input type="text" id="rutdni" name="rutdni"></td>
+	    	</tr>
+	    	<tr>
+	    		<td>NOMBRE</td>
+	    		<td><input type="text" id="nombre" name="nombre"></td>
+	    	</tr>
+	    	<tr>
+	    		<td>APELLIDO</td>
+	    		<td><input type="text" id="apellido" name="apellido"></td>
+	    	</tr>
+	    	<tr>
+	    		<td>CARGO</td>
+	    		<td><input type="text" id="cargo" name="cargo"></td>
+	    	</tr>
+	    	<tr>
+	    		<td>SALARIO</td>
+	    		<td><input type="text" id="salario" name="salario"></td>
+	    	</tr>
+	    	<tr>
+	    		<td>BONO</td>
+	    		<td><input type="text" id="bono" name="bono"></td>
+	    	</tr>
+	    	<tr>
+	    		<td>DESCUENTO</td>
+	    		<td><input type="text" id="descuento" name="descuento"></td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2"><button id="grabarEmpleado" type="submit">GRABAR</button></td>
+	    	</tr>
+    	</form>
+    </table>
+    <div id="mensajeForm"></div>
+    <hr>
+	<h2>CARGA DE NOMINA</h2>
+    <input type="file" id="archivo" />
+    <button id="subirArchivo" type="button">Subir Archivo</button>
+    <div id="mensajeArchivo"></div>
+    
+    <table id="tablaSueldos" border="1">
+        <thead>
+            <tr>
+	    		<th width="12.5%">RUT</th>
+	    		<th width="12.5%">NOMBRES</th>
+	    		<th width="12.5%">APELLIDOS</th>
+	    		<th width="12.5%">CARGO</th>
+	    		<th width="12.5%">SALARIO</th>
+	    		<th width="12.5%">BONO</th>
+	    		<th width="12.5%">DESCUENTO</th>
+	    		<th width="12.5%">SUELDO FINAL</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+	<script type="text/javascript">
+	  $(document).ready(function () {
+		  $("#subirArchivo").click(function () {
+              var archivo = $("#archivo")[0].files[0];
+
+              if (!archivo) {
+                  alert("Por favor selecciona un archivo.");
+                  return;
+              }
+
+              var formData = new FormData();
+              formData.append("archivo", archivo);
+
+              $.ajax({
+                  url: "http://localhost:8080/desafio-1/api/empleados/subirArchivo",  // URL del servicio
+                  type: "POST",
+                  data: formData,
+                  contentType: false,  // Importante, no establecer el contentType
+                  processData: false,  // Importante, para enviar el archivo correctamente
+                  success: function (response) {
+                      $("#mensajeArchivo").html("<p>Archivo cargado con éxito.</p>");
+                      mostrarDatosEnTabla(response); 
+                  },
+                  error: function () {
+                      $("#mensajeArchivo").html("<p style='color:red'>Error al cargar el archivo.</p>");
+                  }
+              });
+          });		  
+		  
+		  function mostrarDatosEnTabla(datos) {
+	            var tabla = $("#tablaSueldos tbody");
+	            tabla.empty();
+
+	            datos.forEach(function(fila) {
+	                var row = "<tr>";
+	                fila.forEach(function(columna) {
+	                    row += "<td>" + columna + "</td>";
+	                });
+	                row += "</tr>";
+	                tabla.append(row);
+	            });
+	        }		  
+		  
+		  
+		  $("#empleadoForm").submit(function (event) {
+			  
+			  $("#mensajeForm").empty();
+			  
+              event.preventDefault(); // Evita el envío tradicional del formulario
+
+              let empleado = {
+            	  rutdni: $("#rutdni").val(),
+                  nombre: $("#nombre").val(),
+                  apellido: $("#apellido").val(),
+                  cargo: $("#cargo").val(),
+                  salario: $("#salario").val(),
+                  bono: $("#bono").val(),
+                  descuento: $("#descuento").val()
+              };
+
+              $.ajax({
+                  url: "http://localhost:8080/desafio-1/api/empleados/",
+                  type: "POST",
+                  contentType: "application/json",
+                  data: JSON.stringify(empleado),
+                  success: function (response) {
+                      $.each(response, function (index, mensaje) {
+                          $("#mensajeForm").append("<p>" + mensaje + "</p>")
+					  });
+                      $("#empleadoForm")[0].reset(); // Limpiar formulario
+                      $("#cargarEmpleados").click();
+                  },
+                  error: function (xhr ) {
+                      if (xhr.responseJSON) {
+                          // Si el servidor devuelve JSON con errores, iteramos sobre ellos
+                          let errores = xhr.responseJSON;
+                          $.each(errores, function (key, value) {
+                              $("#mensajeForm").append("<p style='color:red'>" + key + ": " + value + "</p>");
+                          });
+                      } else {
+                          // Si no es JSON, mostrar el estado y texto de error
+                          $("#mensajeForm").text("Error " + xhr.status + ": " + xhr.statusText);
+                      }
+                  }
+              });
+          });
+		  
+          $("#cargarEmpleados").click(function () {
+              $.ajax({
+                  url: "http://localhost:8080/desafio-1/api/empleados/",
+                  type: "GET",
+                  dataType: "json",
+                  success: function (data) {
+                      $("#tablaEmpleado").empty(); // Limpiar lista antes de agregar nuevos elementos
+                      $("#mensaje").empty(); // Limpiar mensaje antes de agregar nuevos elementos
+                      if (data.length === 0) { 
+                          $("#mensaje").text("No hay empleados disponibles.");
+                      } else {
+	                      $.each(data, function (index, empleado) {
+	                          $("#tablaEmpleado")
+	                         	.append("<tr>")
+	                          	.append("<td>" + empleado.rutdni + "</td>")
+	                          	.append("<td>" + empleado.nombre + "</td>")
+	                          	.append("<td>" + empleado.apellido + "</td>")
+	                          	.append("<td>" + empleado.cargo + "</td>")
+	                          	.append("<td>" + empleado.salario + "</td>")
+	                          	.append("<td>" + empleado.bono + "</td>")
+	                          	.append("<td>" + empleado.descuento + "</td>")
+	                          	.append("<td><button class='eliminar' data-id='" + empleado.id + "'>Eliminar</button></td>")
+	                          	.append("</tr>");
+	                      });
+                      }
+                  },
+                  error: function () {
+                      alert("Error al obtener los datos");
+                  }
+              });
+          });
+          
+       // Evento para el botón de eliminar
+          $(document).on('click', '.eliminar', function () {
+              var id = $(this).data('id');
+              
+              $.ajax({
+                  url: "http://localhost:8080/desafio-1/api/empleados/" + id,
+                  type: "DELETE",
+                  success: function (response) {
+                      $("#cargarEmpleados").click();                	  
+                      alert(response);
+                  },
+                  error: function () {
+                      alert("Error al eliminar el empleado");
+                  }
+              });
+          });
+       
+          $("#cargarEmpleados").click();
+      });
+	</script>
+	
+</body>
+</html>
+
